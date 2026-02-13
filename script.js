@@ -23,8 +23,8 @@ const imageFiles = [
   "WhatsApp Image 2026-02-13 at 7.24.06 AM.jpeg",
   "WhatsApp Image 2026-02-13 at 7.24.06 AM (1).jpeg",
   "WhatsApp Image 2026-02-13 at 7.24.37 AM.jpeg",
-  "WhatsApp Image 2026-02-13 at 7.24.40 AM (1).jpeg",
   "WhatsApp Image 2026-02-13 at 7.24.38 AM (1).jpeg",
+  "WhatsApp Image 2026-02-13 at 7.24.40 AM (1).jpeg",
   "WhatsApp Image 2026-02-13 at 7.24.39 AM.jpeg",
   "WhatsApp Image 2026-02-13 at 7.24.40 AM (2).jpeg",
   "WhatsApp Image 2026-02-13 at 7.24.41 AM.jpeg",
@@ -35,8 +35,41 @@ const imageFiles = [
   "WhatsApp Image 2026-02-13 at 7.24.43 AM.jpeg",
   "WhatsApp Image 2026-02-13 at 7.24.43 AM (2).jpeg",
   "WhatsApp Image 2026-02-13 at 7.24.45 AM (1).jpeg"
-
 ];
+
+/* ===== Text for each image (same order) ===== */
+const imageTexts = [
+  "First Meet - The day when our online convos turned into real life dates. My heart felt at home meeting you the first time. That day i chose you - for life. (25/09/2023)" ,
+  "Our little Cafe date at Shakespeares , spoiling me with the best food since day one.",
+  "Kerala piravi function at my college, you travelled all the way just to see me and that day i felt chosen in the most beautiful way in my heart and the pictures you captured.(01/11/2023)",
+  "The last day of your first vacation with me. Not a goodbye, just a pause before our forever begins",
+  "The 'we made it moment'. Officially 'us' in front of all the people (10/01/2024)",
+  "Our little secret trip to Alappuzha, just us, the waves, and obviously foood.",
+  "Extra special Stay cation to Ilaveezhapoonchira and our perfectly imperfect picture where we laughed from our hearts",
+  "Save The Date - Even the storm wanted to be a part of our forever, our save the date pictures shined through the unexpected rain.(02/12/2024)",
+  "Wedding Day - The moment our love became halal, surrounded by duas, family and friends .Starting of our husband and wife journey. (08/12/2024)",
+  "Kashmir Days - Matching outfits in the cold snow, perfectly matched, perfectly in love during our honeymoon in winter wonderland. (15/12/2024)",
+  "Shamnu's Save the Date - Cute little moment at the cafe, stealing all my love during save the date shoot.(23/12/2024)",
+  "Shamnu's Wedding - All dressed up, hand in hand, glowing and shining together as newlyweds.(28/12/2024 )",
+  "Throughout the weddings all dressed up and stealing the hearts.",
+  "Dubai Airport - Finally ending the long distance, sweetest meet after miles and months, with a beautiful bouquet and a whole lot of love.(30/05/2025)",
+  "First Eid - Dressed in our finest, celebrating our first eid as 'us'.(06/06/2025)",
+  "Under the glow of Sheikh Zayed, hand in hand - another magical night with you. (06/06/2025)",
+  "First birthday Together - Under the warm glow celebrating my first birthday with you. (24/06/2025)",
+  "Anniversary - Celebrating our first anniversary under the purple sky alongside the prettiest lake, making the sweetest memories with the sweetest cheesecakes.(08/12/2025 )",
+  "New Year - Under the burj khalifa in all its glory and lights, we celebrated our second new year together with the most magical fireworks in sight.(01/01/2026 )",
+  "Movie date vibes at wafi mall with all its aesthetic beauty and us with cute smiles. (23/11/2025)",
+  "Sunrise dripped in morning glow + hoodies for the chilly air , Al kudra lake mornings are pure magic. (28/12/2025)",
+  "Jumeirah with its aesthetics, same us new place and many more to goooooo.....Inshallah(03/02/2026)"
+];
+
+/* ===== Helper: ensure a heart at end ===== */
+function withHeart(text) {
+  const t = (text || "").trim();
+  if (!t) return "💖";
+  if (/[💖💘💗💞❤️]$/.test(t)) return t;
+  return `${t} 💖`;
+}
 
 /* ===== NO button runs away ===== */
 function moveNoButton() {
@@ -63,7 +96,7 @@ noBtn.addEventListener("touchstart", (e) => {
   moveNoButton();
 });
 
-/* ===== Smooth Heart Shower (Canvas) - fast ===== */
+/* ===== Smooth Heart Shower (Canvas) ===== */
 const canvas = document.getElementById("fxCanvas");
 const ctx = canvas.getContext("2d", { alpha: true });
 
@@ -145,15 +178,53 @@ function startLoveEffect() {
 }
 
 /* =========================================================
-   ✅ Carousel logic (STACK + rotate + 2s change)
+   ✅ Carousel logic (STACK + 4s timing + arrows)
    ========================================================= */
 
 let polaroids = [];
 
+function ensureNavButtons() {
+  const existing = document.querySelector(".carouselNav");
+  if (existing) return;
+
+  const nav = document.createElement("div");
+  nav.className = "carouselNav";
+
+  const prev = document.createElement("button");
+  prev.className = "navBtn navPrev";
+  prev.type = "button";
+  prev.textContent = "<";
+
+  const next = document.createElement("button");
+  next.className = "navBtn navNext";
+  next.type = "button";
+  next.textContent = ">";
+
+  prev.addEventListener("click", () => {
+    stopCarousel();
+    currentIndex = (currentIndex - 1 + polaroids.length) % polaroids.length;
+    renderStack();
+    startCarousel();
+  });
+
+  next.addEventListener("click", () => {
+    stopCarousel();
+    currentIndex = (currentIndex + 1) % polaroids.length;
+    renderStack();
+    startCarousel();
+  });
+
+  nav.appendChild(prev);
+  nav.appendChild(next);
+
+  const card = document.querySelector(".card");
+  card.appendChild(nav);
+}
+
 function buildPolaroids() {
   polaroidStack.innerHTML = "";
 
-  imageFiles.forEach((file) => {
+  imageFiles.forEach((file, i) => {
     const pol = document.createElement("div");
     pol.className = "polaroid";
 
@@ -165,27 +236,24 @@ function buildPolaroids() {
     img.src = file;
     img.alt = "Our photo";
 
-    photoWrap.innerHTML = "";
     photoWrap.appendChild(img);
 
-    const caption = document.createElement("div");
-    caption.className = "caption";
-    caption.textContent = "💖";
+    // ✅ caption removed entirely (no extra space)
+
+    const story = document.createElement("div");
+    story.className = "storyText";
+    story.textContent = withHeart(imageTexts[i] || "");
 
     pol.appendChild(photoWrap);
-    pol.appendChild(caption);
+    pol.appendChild(story);
 
     polaroidStack.appendChild(pol);
   });
 
   polaroids = Array.from(document.querySelectorAll(".polaroid"));
+  ensureNavButtons();
 }
 
-/* Apply classes so that:
-   - current is active (front)
-   - next 3 are visible behind as stack-1/2/3
-   - everything else hidden
-*/
 function renderStack() {
   polaroids.forEach(p => {
     p.classList.remove("active", "stack-1", "stack-2", "stack-3");
@@ -204,16 +272,27 @@ function renderStack() {
   if (polaroids.length > 3) polaroids[s3].classList.add("stack-3");
 }
 
+function stopCarousel() {
+  if (carouselTimer) {
+    clearTimeout(carouselTimer);
+    carouselTimer = null;
+  }
+}
+
 function startCarousel() {
   if (carouselTimer) return;
 
   renderStack();
 
-  carouselTimer = setInterval(() => {
-    // move current to the back by simply advancing index
-    currentIndex = (currentIndex + 1) % polaroids.length;
-    renderStack();
-  }, 2000); // ✅ change every 2 seconds
+  const step = () => {
+    carouselTimer = setTimeout(() => {
+      currentIndex = (currentIndex + 1) % polaroids.length;
+      renderStack();
+      step();
+    }, 10000); // ✅ fixed 4 seconds for each photo
+  };
+
+  step();
 }
 
 /* YES click */
@@ -228,11 +307,11 @@ nextBtn.addEventListener("click", () => {
   yesScreen.classList.add("hidden");
   galleryScreen.classList.remove("hidden");
 
-  // build the polaroids with your images (only once is fine)
   if (polaroids.length === 0) {
     buildPolaroids();
   }
 
+  stopCarousel();
   currentIndex = 0;
   startCarousel();
 });

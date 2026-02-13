@@ -14,28 +14,24 @@ body {
 .card {
   position: relative;
   z-index: 2; /* above canvas */
-  width: min(560px, 92vw);
-  padding: 34px 26px 28px;
+  width: min(700px, 94vw);
+  padding: 44px 34px 36px;
   text-align: center;
 
   background: linear-gradient(180deg, #7a0a2a, #4b0417);
   color: white;
 
-  border-radius: 26px;
+  border-radius: 30px;
   box-shadow: 0 22px 55px rgba(0,0,0,0.35);
   border: 2px solid rgba(255,255,255,0.18);
 
   animation: popIn 650ms ease-out;
 }
 
+/* ✅ remove the center heart */
 .card::before {
-  content: "💗";
-  position: absolute;
-  top: -26px;
-  left: 50%;
-  transform: translateX(-50%);
-  font-size: 46px;
-  filter: drop-shadow(0 10px 18px rgba(0,0,0,0.25));
+  content: "";
+  display: none;
 }
 
 @keyframes popIn {
@@ -46,20 +42,21 @@ body {
 /* ===== Badge ===== */
 .badge {
   display: inline-block;
-  padding: 10px 14px;
+  padding: 12px 16px;
   border-radius: 999px;
   background: rgba(255,255,255,0.14);
   color: #fff;
   font-weight: 800;
   box-shadow: 0 10px 20px rgba(0,0,0,0.25);
-  margin-bottom: 14px;
+  margin-bottom: 18px;
   border: 1px solid rgba(255,255,255,0.22);
+  font-size: 16px;
 }
 
 /* ===== Headings/Text ===== */
 h1 {
   margin: 10px 0 8px;
-  font-size: 30px;
+  font-size: 34px;
   color: #fff3f6;
 }
 
@@ -71,7 +68,7 @@ h1 {
 .sub {
   margin: 0 0 18px;
   color: rgba(255,255,255,0.85);
-  font-size: 16px;
+  font-size: 17px;
 }
 
 /* ===== Buttons ===== */
@@ -82,7 +79,7 @@ h1 {
   justify-content: center;
   align-items: center;
   margin-top: 10px;
-  min-height: 58px; /* helps when NO moves */
+  min-height: 58px;
 }
 
 .btn {
@@ -111,11 +108,11 @@ h1 {
   box-shadow: 0 12px 22px rgba(255, 107, 136, 0.35);
 }
 
-/* ===== Screen 2 (YES Message + Next button) ===== */
+/* ===== Screen 2 ===== */
 .yes-message {
   margin-top: 10px;
   padding: 22px 14px;
-  font-size: 26px;
+  font-size: 28px;
   font-weight: 900;
   color: #ffd1dc;
   text-align: center;
@@ -130,27 +127,18 @@ h1 {
   to   { transform: scale(1.03); }
 }
 
-.next {
-  margin-top: 14px;
-  background: #ffd1dc;
-  color: #4b0417;
-  box-shadow: 0 12px 22px rgba(0,0,0,0.25);
-}
-
-.next:hover { transform: translateY(-2px); }
-
-/* ===== Screen 3 (Gallery) ===== */
+/* ===== Screen 3 ===== */
 .galleryTitle {
-  margin: 6px 0 12px;
-  font-size: 24px;
+  margin: 10px 0 16px;
+  font-size: 30px;
   color: #fff3f6;
   font-weight: 900;
 }
 
 .polaroidStack {
   position: relative;
-  width: 280px;
-  height: 340px;
+  width: 340px;
+  height: 460px;
   margin: 0 auto;
 }
 
@@ -159,38 +147,34 @@ h1 {
   position: absolute;
   inset: 0;
   margin: auto;
-  width: 280px;
-  height: 340px;
+  width: 340px;
+  height: 460px;
   background: #fff;
-  border-radius: 14px;
+  border-radius: 16px;
   box-shadow: 0 18px 40px rgba(0,0,0,0.35);
-  padding: 14px 14px 22px;
+  padding: 16px 16px 18px;
 
   opacity: 0;
   transform: rotate(-6deg) scale(0.94);
   transition: transform 600ms ease, opacity 600ms ease;
 }
 
-/* Front */
 .polaroid.active {
   z-index: 99;
   opacity: 1;
   transform: rotate(2deg) scale(1);
 }
 
-/* Stack behind (visible) */
 .polaroid.stack-1 {
   z-index: 9;
   opacity: 0.65;
   transform: rotate(-10deg) scale(0.96);
 }
-
 .polaroid.stack-2 {
   z-index: 8;
   opacity: 0.45;
   transform: rotate(10deg) scale(0.93);
 }
-
 .polaroid.stack-3 {
   z-index: 7;
   opacity: 0.35;
@@ -200,8 +184,8 @@ h1 {
 /* Photo container */
 .photo {
   width: 100%;
-  height: 240px;
-  border-radius: 10px;
+  height: 300px;
+  border-radius: 12px;
   background: #eee;
   display: grid;
   place-items: center;
@@ -209,22 +193,74 @@ h1 {
   color: #333;
 }
 
-/* Real image style */
 .photoImg {
   width: 100%;
-  height: 240px;
+  height: 300px;
   object-fit: cover;
-  border-radius: 10px;
+  border-radius: 12px;
   display: block;
 }
 
-/* Caption under photo */
-.caption {
+/* ✅ Story text (bigger + scroll if long) */
+.storyText {
   margin-top: 10px;
-  font-weight: 900;
-  color: #7a0a2a;
-  text-align: center;
+  padding: 10px 12px;
+  border-radius: 12px;
+  background: rgba(122, 10, 42, 0.07);
+  border: 1px solid rgba(122, 10, 42, 0.12);
+
+  color: #4b0417;
+  font-weight: 800;
+  font-size: 13px;
+  line-height: 1.25;
+  text-align: left;
+
+  height: 112px;          /* ✅ fixed area for long text */
+  overflow-y: auto;       /* ✅ scroll if text is longer */
 }
 
-/* Utility */
+/* ✅ pretty scrollbar (minimal) */
+.storyText::-webkit-scrollbar {
+  width: 6px;
+}
+.storyText::-webkit-scrollbar-thumb {
+  background: rgba(122, 10, 42, 0.25);
+  border-radius: 999px;
+}
+
+/* ✅ transparent < > icons inside card (outside polaroid) */
+.carouselNav {
+  position: absolute;
+  top: 54%;
+  left: 0;
+  right: 0;
+  transform: translateY(-50%);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  pointer-events: none;
+  padding: 0 18px;
+  z-index: 50;
+}
+
+.navBtn {
+  pointer-events: auto;
+  width: 44px;
+  height: 44px;
+  border-radius: 999px;
+  border: 1px solid rgba(255,255,255,0.25);
+  background: rgba(255,255,255,0.10);
+  color: rgba(255,255,255,0.85);
+  font-size: 24px;
+  font-weight: 900;
+  cursor: pointer;
+  backdrop-filter: blur(6px);
+  transition: transform 0.12s ease, background 0.12s ease;
+}
+
+.navBtn:hover {
+  transform: scale(1.06);
+  background: rgba(255,255,255,0.16);
+}
+
 .hidden { display: none; }
