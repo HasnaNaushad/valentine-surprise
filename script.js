@@ -20,11 +20,10 @@ const imageFiles = [
   "WhatsApp Image 2026-02-13 at 7.24.05 AM.jpeg",
   "IMG_8293.JPG",
   "IMG_8857.JPG",
-  "IMG_6143.JPG",
   "WhatsApp Image 2026-02-13 at 7.24.06 AM.jpeg",
   "WhatsApp Image 2026-02-13 at 7.24.06 AM (1).jpeg",
-  "WhatsApp Image 2026-02-13 at 7.24.40 AM (1).jpeg",
   "WhatsApp Image 2026-02-13 at 7.24.37 AM.jpeg",
+  "WhatsApp Image 2026-02-13 at 7.24.40 AM (1).jpeg",
   "WhatsApp Image 2026-02-13 at 7.24.38 AM (1).jpeg",
   "WhatsApp Image 2026-02-13 at 7.24.39 AM.jpeg",
   "WhatsApp Image 2026-02-13 at 7.24.40 AM (2).jpeg",
@@ -35,8 +34,8 @@ const imageFiles = [
   "WhatsApp Image 2026-02-13 at 7.24.44 AM.jpeg",
   "WhatsApp Image 2026-02-13 at 7.24.43 AM.jpeg",
   "WhatsApp Image 2026-02-13 at 7.24.43 AM (2).jpeg",
-  "WhatsApp Image 2026-02-13 at 7.24.45 AM (1).jpeg",
   "WhatsApp Image 2026-02-13 at 7.24.45 AM (1).jpeg"
+
 ];
 
 /* ===== NO button runs away ===== */
